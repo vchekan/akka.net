@@ -28,7 +28,7 @@ namespace Akka.Cluster.Tools.Tests.Singleton
             akka.loglevel = INFO
             akka.actor.provider = ""Akka.Aluster.ClusterActorRefProvider, Akka.Cluster""
             akka.remote.log-remote-lifecycle-events = off
-            akka.cluster.auto-down-unreachable-after = 0s");
+            akka.cluster.auto-down-unreachable-after = 0s").WithFallback(MultiNodeClusterSpec.ClusterConfig());
         }
     }
 
@@ -36,9 +36,9 @@ namespace Akka.Cluster.Tools.Tests.Singleton
     public class ClusterSingletonManagerStartupNode2 : ClusterSingletonManagerStartupConfig { }
     public class ClusterSingletonManagerStartupNode3 : ClusterSingletonManagerStartupConfig { }
 
-    public class ClusterSingletonManagerStartupSpec : MultiNodeSpec
+    public abstract class ClusterSingletonManagerStartupSpec : MultiNodeSpec
     {
-        public ClusterSingletonManagerStartupSpec() : base(new ClusterSingletonManagerStartupConfig())
+        protected ClusterSingletonManagerStartupSpec() : base(new ClusterSingletonManagerStartupConfig())
         {
             EchoProxy = new Lazy<IActorRef>(() => Sys.ActorOf(ClusterSingletonProxy.Props(
                 singletonManagerPath: "/user/echo",

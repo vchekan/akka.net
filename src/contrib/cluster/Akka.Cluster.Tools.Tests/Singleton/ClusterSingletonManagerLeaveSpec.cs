@@ -23,7 +23,7 @@ namespace Akka.Cluster.Tools.Tests.Singleton
 
             CommonConfig = ConfigurationFactory.ParseString(@"
                 akka.loglevel = INFO
-                akka.actor.provider = ""Akka.Cluster.ClusterActorRefProvider""
+                akka.actor.provider = ""Akka.Cluster.ClusterActorRefProvider, Akka.Cluster""
                 akka.remote.log-remote-lifecycle-events = off
                 akka.cluster.auto-down-unreachable-after = off
             ").WithFallback(MultiNodeClusterSpec.ClusterConfig());
@@ -33,8 +33,8 @@ namespace Akka.Cluster.Tools.Tests.Singleton
     public class ClusterSingletonManagerLeaveNode1 : ClusterSingletonManagerLeaveSpec { }
     public class ClusterSingletonManagerLeaveNode2 : ClusterSingletonManagerLeaveSpec { }
     public class ClusterSingletonManagerLeaveNode3 : ClusterSingletonManagerLeaveSpec { }
-
-    public class ClusterSingletonManagerLeaveSpec : MultiNodeClusterSpec
+    
+    public abstract class ClusterSingletonManagerLeaveSpec : MultiNodeClusterSpec
     {
         public sealed class EchoStarted
         {
@@ -67,12 +67,12 @@ namespace Akka.Cluster.Tools.Tests.Singleton
         private readonly RoleName _third;
 
         private readonly Lazy<IActorRef> _echoProxy;
-
-        public ClusterSingletonManagerLeaveSpec() : this(new ClusterSingletonManagerLeaveSpecConfig())
+        
+        protected ClusterSingletonManagerLeaveSpec() : this(new ClusterSingletonManagerLeaveSpecConfig())
         {
         }
 
-        public ClusterSingletonManagerLeaveSpec(ClusterSingletonManagerLeaveSpecConfig config) : base(config)
+        protected ClusterSingletonManagerLeaveSpec(ClusterSingletonManagerLeaveSpecConfig config) : base(config)
         {
             _first = config.First;
             _second = config.Second;
