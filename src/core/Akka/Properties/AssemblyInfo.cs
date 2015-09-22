@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Akka")]
 [assembly: AssemblyDescription("")]
-[assembly: AssemblyProduct("Akka")]
+[assembly: AssemblyProduct("Akka (with async)")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
